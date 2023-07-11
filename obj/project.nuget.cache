@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W3MIdfHkbLHuFb7kx4b9ta1NllX2tEhERz7ryJse33Nre5Ia8wcuHDF7PbaJWTcZ9FWGgc0ZDA4DOXqeb/8nAw==",
+  "dgSpecHash": "aSIk/Vp7QIfF047rxqt4isTW2EY6jMnSiKk2V1CIsgcUrxMbmsnn5pNVX7h5uP1DRcCERVhp4HI4UGEm2cMJOQ==",
   "success": true,
-  "projectFilePath": "/home/jorge/Documentos/uart-ctl/uart-ctl.csproj",
+  "projectFilePath": "/media/jorge/OS/Projetos/uart-ctl/uart-ctl.csproj",
   "expectedPackageFiles": [
     "/home/jorge/.nuget/packages/runtime.linux-arm.runtime.native.system.io.ports/6.0.0/runtime.linux-arm.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
     "/home/jorge/.nuget/packages/runtime.linux-arm64.runtime.native.system.io.ports/6.0.0/runtime.linux-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
@@ -11,9 +11,9 @@
     "/home/jorge/.nuget/packages/runtime.osx-arm64.runtime.native.system.io.ports/6.0.0/runtime.osx-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
     "/home/jorge/.nuget/packages/runtime.osx-x64.runtime.native.system.io.ports/6.0.0/runtime.osx-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
     "/home/jorge/.nuget/packages/system.io.ports/6.0.0/system.io.ports.6.0.0.nupkg.sha512",
-    "/home/jorge/.nuget/packages/microsoft.netcore.app.runtime.linux-arm64/6.0.16/microsoft.netcore.app.runtime.linux-arm64.6.0.16.nupkg.sha512",
-    "/home/jorge/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-arm64/6.0.16/microsoft.aspnetcore.app.runtime.linux-arm64.6.0.16.nupkg.sha512",
-    "/home/jorge/.nuget/packages/microsoft.netcore.app.host.linux-arm64/6.0.16/microsoft.netcore.app.host.linux-arm64.6.0.16.nupkg.sha512"
+    "/home/jorge/.nuget/packages/microsoft.netcore.app.runtime.linux-arm64/6.0.19/microsoft.netcore.app.runtime.linux-arm64.6.0.19.nupkg.sha512",
+    "/home/jorge/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-arm64/6.0.19/microsoft.aspnetcore.app.runtime.linux-arm64.6.0.19.nupkg.sha512",
+    "/home/jorge/.nuget/packages/microsoft.netcore.app.host.linux-arm64/6.0.19/microsoft.netcore.app.host.linux-arm64.6.0.19.nupkg.sha512"
   ],
   "logs": []
 }

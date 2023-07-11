@@ -51,13 +51,13 @@ namespace UartCommunication
             Console.WriteLine(receivedData);
         }
 
-        public void BorderInit()
+        public void CommandsInit()
         {
             string[] commandSequence = new string[]
             {//WISUN TEST
-                "clrst",
-                "reset",
                 "atstart 1",
+                "netname WISUN",
+                "chan 33 59",
                 "save",
                 "reset"
             };

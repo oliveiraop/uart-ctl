@@ -1,0 +1,3 @@
+/media/jorge/OS/Projetos/uart-ctl/bin/Debug/net6.0/linux-arm64/publish/uart-ctl.pdb
+/media/jorge/OS/Projetos/uart-ctl/bin/Debug/net6.0/linux-arm64/publish/libSystem.IO.Ports.Native.so
+/media/jorge/OS/Projetos/uart-ctl/bin/Debug/net6.0/linux-arm64/publish/uart-ctl

@@ -17,7 +17,7 @@ namespace UartCommunication
             UartCommunication communication = new UartCommunication(deviceName, 115200);
             communication.Open();
 
-            communication.BorderInit();// Envia comandos para iniciar o border
+            communication.CommandsInit(); // Envia comandos para iniciar o border
 
             while(true){
             
