@@ -34,4 +34,5 @@ namespace UartCommunication
             communication.Close();
         }
     }
+    
 }
