@@ -1,4 +1,5 @@
 using System.IO.Ports;
+using System.Text.RegularExpressions;
 
 namespace UartCommunication
 {
@@ -41,14 +42,14 @@ namespace UartCommunication
         {
             SerialPort serialPort = (SerialPort)sender;
             string receivedData = string.Empty;
-            
+
             while (serialPort.BytesToRead > 0)
             {
                 receivedData += serialPort.ReadExisting();
             }
-            
             // Process received data here
             Console.WriteLine(receivedData);
+            ChecarIP(receivedData);
         }
 
         public void CommandsInit()
@@ -56,8 +57,6 @@ namespace UartCommunication
             string[] commandSequence = new string[]
             {//WISUN TEST
                 "atstart 1",
-                "netname WISUN",
-                "chan 33 59",
                 "save",
                 "reset"
             };
@@ -72,6 +71,49 @@ namespace UartCommunication
                 string receivedData = _serialPort.ReadExisting();
                 Console.WriteLine(receivedData);
             }
+        }
+
+        public void ChecarIP(string message)
+        {
+
+            if (ValidateIPMessage(message))
+            {
+                string ipAddress = ExtractIpAddressFromMessage(message);
+                Console.WriteLine(ipAddress);
+                if (!string.IsNullOrEmpty(ipAddress))
+                {
+                    string udpstMessage = $"udpst {ipAddress} 20171 \"yes!\"";
+                    Console.WriteLine(udpstMessage);
+                    SendMessage(udpstMessage);
+                }
+            }
+        }
+
+        static bool ValidateIPMessage(string message)
+        {
+            string expectedMessage = "udprt <[^>]+> \"isb?\""; // Use um padrão regex flexível para capturar qualquer endereço IP entre < e >
+            return Regex.IsMatch(message, expectedMessage);
+        }
+
+        static string ExtractIpAddressFromMessage(string message)
+        {
+            // Define o padrão de expressão regular para extrair o endereço IP entre os símbolos "<" e ">"
+            string pattern = @"<([^>]*)>";
+
+            // Cria uma instância da classe Regex
+            Regex regex = new Regex(pattern);
+
+            // Procura por correspondências na mensagem
+            Match match = regex.Match(message);
+
+            // Se encontrar uma correspondência, retorna o valor entre os símbolos "<" e ">"
+            if (match.Success)
+            {
+                return match.Groups[1].Value;
+            }
+
+            // Caso contrário, retorna uma string vazia indicando que o IP não foi encontrado
+            return string.Empty;
         }
     }
 }

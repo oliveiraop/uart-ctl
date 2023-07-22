@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aSIk/Vp7QIfF047rxqt4isTW2EY6jMnSiKk2V1CIsgcUrxMbmsnn5pNVX7h5uP1DRcCERVhp4HI4UGEm2cMJOQ==",
+  "dgSpecHash": "r/c6YXHanA3hfKAeT3E/LfHLtJyKylEjeAf4D+Vnso0Ap+YBP+1rU+i1wMsBm01vdQmvDUVYgCd1WQRF05Wx8g==",
   "success": true,
-  "projectFilePath": "/media/jorge/OS/Projetos/uart-ctl/uart-ctl.csproj",
+  "projectFilePath": "/home/jorge/Documentos/projetos/uart-ctl/uart-ctl.csproj",
   "expectedPackageFiles": [
     "/home/jorge/.nuget/packages/runtime.linux-arm.runtime.native.system.io.ports/6.0.0/runtime.linux-arm.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
     "/home/jorge/.nuget/packages/runtime.linux-arm64.runtime.native.system.io.ports/6.0.0/runtime.linux-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
@@ -11,9 +11,9 @@
     "/home/jorge/.nuget/packages/runtime.osx-arm64.runtime.native.system.io.ports/6.0.0/runtime.osx-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
     "/home/jorge/.nuget/packages/runtime.osx-x64.runtime.native.system.io.ports/6.0.0/runtime.osx-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
     "/home/jorge/.nuget/packages/system.io.ports/6.0.0/system.io.ports.6.0.0.nupkg.sha512",
-    "/home/jorge/.nuget/packages/microsoft.netcore.app.runtime.linux-arm64/6.0.19/microsoft.netcore.app.runtime.linux-arm64.6.0.19.nupkg.sha512",
-    "/home/jorge/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-arm64/6.0.19/microsoft.aspnetcore.app.runtime.linux-arm64.6.0.19.nupkg.sha512",
-    "/home/jorge/.nuget/packages/microsoft.netcore.app.host.linux-arm64/6.0.19/microsoft.netcore.app.host.linux-arm64.6.0.19.nupkg.sha512"
+    "/home/jorge/.nuget/packages/microsoft.netcore.app.runtime.linux-arm64/6.0.20/microsoft.netcore.app.runtime.linux-arm64.6.0.20.nupkg.sha512",
+    "/home/jorge/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-arm64/6.0.20/microsoft.aspnetcore.app.runtime.linux-arm64.6.0.20.nupkg.sha512",
+    "/home/jorge/.nuget/packages/microsoft.netcore.app.host.linux-arm64/6.0.20/microsoft.netcore.app.host.linux-arm64.6.0.20.nupkg.sha512"
   ],
   "logs": []
 }

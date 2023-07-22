@@ -10,4 +10,4 @@ build_property.EnableSingleFileAnalyzer = true
 build_property.EnableTrimAnalyzer = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property.RootNamespace = uart_ctl
-build_property.ProjectDir = /media/jorge/OS/Projetos/uart-ctl/
+build_property.ProjectDir = /home/jorge/Documentos/projetos/uart-ctl/
