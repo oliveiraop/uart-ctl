@@ -16,23 +16,26 @@ namespace UartCommunication
 
             UartCommunication communication = new UartCommunication(deviceName, 115200);
             communication.Open();
+            communication.StartReading();
 
-            communication.CommandsInit(); // Envia comandos para iniciar o border
+            Console.WriteLine("Digite 'exit' para encerrar o programa.");
 
-            while(true){
-            
-            // Recebe input
-            string? message = Console.ReadLine();
+            while (true)
+            {
+                // Recebe input
+                string message = Console.ReadLine();
 
-            // Fecha programa caso o cmd seja exit
-            if(message =="exit") break;
-            
-            // Envia a mensagem
-            communication.SendMessage(message);
+                // Fecha o programa se o comando for "exit"
+                if (message.ToLower() == "exit")
+                {
+                    break;
+                }
+
+                // Envia a mensagem
+                communication.SendMessage(message);
             }
 
             communication.Close();
         }
     }
-    
 }

@@ -1,3 +1,4 @@
+using System;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 
@@ -10,7 +11,6 @@ namespace UartCommunication
         public UartCommunication(string portName, int baudRate)
         {
             _serialPort = new SerialPort(portName, baudRate);
-            _serialPort.DataReceived += SerialPortDataReceived;
         }
 
         public void Open()
@@ -38,81 +38,77 @@ namespace UartCommunication
             }
         }
 
-        private void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
+        public void StartReading()
         {
-            SerialPort serialPort = (SerialPort)sender;
-            string receivedData = string.Empty;
-
-            while (serialPort.BytesToRead > 0)
-            {
-                receivedData += serialPort.ReadExisting();
-            }
-            // Process received data here
-            Console.WriteLine(receivedData);
-            ChecarIP(receivedData);
+            Thread readThread = new Thread(SerialPortDataReceived);
+            readThread.Start();
         }
 
-        public void CommandsInit()
+        public void SerialPortDataReceived(object sender)
         {
-            string[] commandSequence = new string[]
-            {//WISUN TEST
-                "atstart 1",
-                "save",
-                "reset"
-            };
-
-            foreach (string command in commandSequence)
+            while (true)
             {
-                SendMessage(command);
+                string receivedData = string.Empty;
 
-                // Aguardar o retorno do chip ou algum tempo de espera aqui, se necessário
-                // Por exemplo, você pode usar Thread.Sleep para aguardar alguns milissegundos
+                while (_serialPort.BytesToRead > 0)
+                {
+                    receivedData += _serialPort.ReadExisting();
+                }
 
-                string receivedData = _serialPort.ReadExisting();
-                Console.WriteLine(receivedData);
+                if (!string.IsNullOrEmpty(receivedData))
+                {
+                    Console.WriteLine(receivedData);
+                    ChecarIP(receivedData);
+                }
             }
         }
 
         public void ChecarIP(string message)
         {
-
-            if (ValidateIPMessage(message))
+            if (IsUdprtMessage(message))
             {
                 string ipAddress = ExtractIpAddressFromMessage(message);
-                Console.WriteLine(ipAddress);
                 if (!string.IsNullOrEmpty(ipAddress))
                 {
-                    string udpstMessage = $"udpst {ipAddress} 20171 \"yes!\"";
-                    Console.WriteLine(udpstMessage);
-                    SendMessage(udpstMessage);
+                    if (ValidateIPMessage(message))
+                    {
+                        string udpstMessage = $"udpst {ipAddress} 20171 \"yes!\"";
+                        SendMessage(udpstMessage);
+                    }
+                    else
+                    {
+                        
+                    }
                 }
             }
         }
 
-        static bool ValidateIPMessage(string message)
+        static bool IsUdprtMessage(string message)
         {
-            string expectedMessage = "udprt <[^>]+> \"isb?\""; // Use um padrão regex flexível para capturar qualquer endereço IP entre < e >
-            return Regex.IsMatch(message, expectedMessage);
+            return message.Trim().StartsWith("udprt", StringComparison.OrdinalIgnoreCase);
         }
 
-        static string ExtractIpAddressFromMessage(string message)
+        static bool ValidateIPMessage(string message)
         {
-            // Define o padrão de expressão regular para extrair o endereço IP entre os símbolos "<" e ">"
+            int startIndex = message.IndexOf("udprt <");
+            int endIndex = message.IndexOf("> \"isb?\"");
+
+            // Verifica se a mensagem contém "udprt <", "> \"isb?\"" e se os índices estão na ordem correta
+            return startIndex != -1 && endIndex != -1 && startIndex < endIndex;
+        }
+
+
+        private string ExtractIpAddressFromMessage(string message)
+        {
             string pattern = @"<([^>]*)>";
-
-            // Cria uma instância da classe Regex
             Regex regex = new Regex(pattern);
-
-            // Procura por correspondências na mensagem
             Match match = regex.Match(message);
 
-            // Se encontrar uma correspondência, retorna o valor entre os símbolos "<" e ">"
             if (match.Success)
             {
                 return match.Groups[1].Value;
             }
 
-            // Caso contrário, retorna uma string vazia indicando que o IP não foi encontrado
             return string.Empty;
         }
     }
