@@ -12,15 +12,19 @@ namespace UartCommunication
                 return;
             }
 
-            string deviceName = args[0];
+            string deviceName = args[0]; // @TODO /dev/ttymxc0
 
             UartCommunication communication = new UartCommunication(deviceName, 115200);
-            communication.Open();
+            communication.Open(); // Abertura do canal serial, pode ser colocado no construtor se achar necessário
             communication.StartReading();
+            // Thread readThread = new Thread(communication.SerialPortDataReceived); // @TODO ese aqui é o start da thread que está em communication.StartReading();
+            communication.Config();
+
+            
 
             Console.WriteLine("Digite 'exit' para encerrar o programa.");
 
-            while (true)
+            while (true) // @TODO esse while pode ser removido, o send message deve ser integrado
             {
                 // Recebe input
                 string message = Console.ReadLine();
