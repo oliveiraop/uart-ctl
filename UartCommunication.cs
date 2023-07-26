@@ -140,7 +140,7 @@ namespace UartCommunication
         }*/
 
 
-        private void ChecarMensagem(string message) // @TODO estou pensando em retornar um booleano pra facilitar
+        private bool ChecarMensagem(string message) // @TODO estou pensando em retornar um booleano pra facilitar
         {
             if (IsUdprtMessage(message))
             {
@@ -188,9 +188,9 @@ namespace UartCommunication
 
             return string.Empty;
         }
-    }
+    
 
-            private string ExtractDataFromMessage(string message) // @TODO utilizar essa função pra extrair a mensagem recebida
+            private string ExtractDataFromMessage(string message) // @TODO utilizar essa função pra extrair a mensagem recebida "4 16 17 3 111 107"
         {
             string pattern = @"udprt <[^>]*> (.*)";
             Regex regex = new Regex(pattern);
@@ -203,4 +203,6 @@ namespace UartCommunication
 
             return string.Empty;
         }
+
+    }
 }
