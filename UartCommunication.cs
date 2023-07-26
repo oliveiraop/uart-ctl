@@ -8,11 +8,16 @@ namespace UartCommunication
     {
         private SerialPort _serialPort;
 
-        public UartCommunication(string portName, int baudRate)
+        
+        public UartCommunication(string portName, int baudRate, Action<string, string> onMessageReceived)
         {
             _serialPort = new SerialPort(portName, baudRate);
+            OnMessageReceived = onMessageReceived;
             // @TODO Setar GPIO aqui (gpipchip0 line 6 = 1)
         }
+
+        public Action<string, string> OnMessageReceived { get; set; }
+
 
         public void Config() // Comando para inicializar as configurações do módulo
         {
@@ -78,6 +83,7 @@ namespace UartCommunication
                         //@TODO pegar o received data e enviar para o gateway daqui, é necessário formatar a string
                         string ipAddress = ExtractIpAddressFromMessage(receivedData);
                         string data = ExtractDataFromMessage(receivedData);
+                        OnMessageReceived("/client/publishtopic", ipAddress + data);
                     }
                 }
             }
@@ -188,6 +194,7 @@ namespace UartCommunication
 
             return string.Empty;
         }
+
     
 
             private string ExtractDataFromMessage(string message) // @TODO utilizar essa função pra extrair a mensagem recebida "4 16 17 3 111 107"

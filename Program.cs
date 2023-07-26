@@ -12,12 +12,24 @@ namespace UartCommunication
                 return;
             }
 
+            MQTT mqttClientSide = new MQTT();
+            mqttClientSide.MQTTConnect();
+
+            Thread mqttClientSideTask = new Thread(new ThreadStart(mqttClientSide!.MQTT_Task));
+
+            
+
 
             string deviceName = args[0]; // @TODO /dev/ttymxc0
 
 
             // ######################################     INTEGRAVEL   ########################################################
-            UartCommunication communication = new UartCommunication(deviceName, 115200);
+            UartCommunication communication = new UartCommunication(deviceName, 115200, mqttClientSide.SendMessage);
+            mqttClientSide.sendMessage = communication.SendMessage;
+
+            System.Console.WriteLine("Running MQTT Client side TASK...");
+            mqttClientSideTask.Start();
+
             communication.Open(); // Abertura do canal serial, pode ser colocado no construtor se achar necessário
             communication.StartReading();
             // Thread readThread = new Thread(communication.SerialPortDataReceived); // @TODO ese aqui é o start da thread que está em communication.StartReading();
