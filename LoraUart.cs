@@ -5,12 +5,12 @@ using System.Device.Gpio.Drivers;
 
 namespace UartCommunication
 {
-    public class UartCommunication
+    public class LoraUart
     {
         private SerialPort _serialPort;
 
         
-        public UartCommunication(string portName, int baudRate, Action<string, string> onMessageReceived)
+        public LoraUart(string portName, int baudRate, Action<string, string> onMessageReceived)
         {
             _serialPort = new SerialPort(portName, baudRate);
             OnMessageReceived = onMessageReceived;
@@ -63,6 +63,7 @@ namespace UartCommunication
         {
             if (_serialPort.IsOpen)
             {
+                Console.WriteLine($"Lora Message to send: {message}");
                 _serialPort.WriteLine(message);
             }
         }
@@ -87,13 +88,7 @@ namespace UartCommunication
                 if (!string.IsNullOrEmpty(receivedData))
                 {
                     Console.WriteLine(receivedData);
-                    if (ChecarMensagem(receivedData)) // Se retornar true é por que é um dado válido
-                    {
-                        //@TODO pegar o received data e enviar para o gateway daqui, é necessário formatar a string
-                        string ipAddress = ExtractIpAddressFromMessage(receivedData);
-                        string data = ExtractDataFromMessage(receivedData);
-                        OnMessageReceived("wisun", ipAddress + data);
-                    }
+                        OnMessageReceived("lora", receivedData);
                 }
                 Thread.Sleep(1);
             }

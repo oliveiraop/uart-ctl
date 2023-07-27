@@ -6,11 +6,11 @@ namespace UartCommunication
     {
         static void Main(string[] args)
         {
-            if (args.Length < 1)
+            /*if (args.Length < 1)
             {
                 Console.WriteLine("Você precisa fornecer o nome do dispositivo como argumento de linha de comando.");
                 return;
-            }
+            }*/
 
             MQTT mqttClientSide = new MQTT();
             mqttClientSide.MQTTConnect();
@@ -20,20 +20,26 @@ namespace UartCommunication
             
 
 
-            string deviceName = args[0]; // @TODO /dev/ttymxc0
+            //string deviceName = args[0]; // @TODO /dev/ttymxc0
 
 
             // ######################################     INTEGRAVEL   ########################################################
-            UartCommunication communication = new UartCommunication(deviceName, 115200, mqttClientSide.SendMessage);
-            mqttClientSide.sendMessage = communication.SendMessage;
+            UartCommunication wisun = new UartCommunication("/dev/ttymxc0", 115200, mqttClientSide.SendMessage);
+            LoraUart lora = new LoraUart("/dev/ttyUSB1", 115200, mqttClientSide.SendMessage);
+            mqttClientSide.sendWisunMessage = wisun.SendMessage;
+            mqttClientSide.sendLoraMessage = lora.SendMessage;
 
             System.Console.WriteLine("Running MQTT Client side TASK...");
             mqttClientSideTask.Start();
 
-            communication.Open(); // Abertura do canal serial, pode ser colocado no construtor se achar necessário
-            communication.StartReading();
+            wisun.TurnWisunOn();
+            wisun.Open(); // Abertura do canal serial, pode ser colocado no construtor se achar necessário
+            wisun.StartReading();
+
+            lora.Open();
+            lora.StartReading();
             // Thread readThread = new Thread(communication.SerialPortDataReceived); // @TODO ese aqui é o start da thread que está em communication.StartReading();
-            communication.Config();
+            wisun.Config();
             // ################################################################################################################
             
 
@@ -51,10 +57,10 @@ namespace UartCommunication
                 }
 
                 // Envia a mensagem
-                communication.SendMessage(message);
+                wisun.SendMessage(message);
             }
 
-            communication.Close();
+            wisun.Close();
         }
     }
 }

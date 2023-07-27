@@ -27,7 +27,8 @@ public class MQTT
     public string? mqtt_user = "clientuser"!;
     public string? mqtt_password = "clientpass"!;
     public string? mqtt_publish_topic = "/client/publishtopic"!;
-    public string? mqtt_subscribe_topic = "/client/subscribetopic"!;
+    public string? mqtt_subscribe_wisun_topic = "/client/subscribetopic/wisun"!;
+    public string? mqtt_subscribe_lora_topic = "/client/subscribetopic/lora"!;
     public string? mqtt_clientID = "aufas-client";
     public MqttClient? client;
 
@@ -68,7 +69,8 @@ public class MQTT
         }
         Console.WriteLine($" [INFO] Connected: {mqtt_clientID}, to broker: {broker_addr}");
         // Subscribe MQTT topic
-        client.Subscribe(new string[] { mqtt_subscribe_topic! }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        client.Subscribe(new string[] { mqtt_subscribe_lora_topic! }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        client.Subscribe(new string[] { mqtt_subscribe_wisun_topic! }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
         
         // register to message received 
         client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
@@ -80,9 +82,17 @@ public class MQTT
     }
     private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
     {
-        sendMessage(Encoding.UTF8.GetString(e.Message));
-        Console.WriteLine(Encoding.UTF8.GetString(e.Message));
+        if (e.Topic == mqtt_subscribe_wisun_topic) 
+        {
+            sendWisunMessage(Encoding.UTF8.GetString(e.Message));
+        } else if (e.Topic == mqtt_subscribe_lora_topic) 
+        {
+            Console.WriteLine("Lora Message: " + Encoding.UTF8.GetString(e.Message));
+            sendLoraMessage(Encoding.UTF8.GetString(e.Message));
+        }
+        
     }
 
-    public Action<string> sendMessage = (message) => { };
+    public Action<string> sendWisunMessage = (message) => { };
+    public Action<string> sendLoraMessage = (message) => { };
 }
